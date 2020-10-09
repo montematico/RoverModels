@@ -5,16 +5,6 @@ bboxSize -1.000000 -1.000000 -1.000000
 bboxCenter 0.000000 0.000000 0.000000
 }
 Inline {
-url [" WheelBase.wrl "]
-bboxSize -1.000000 -1.000000 -1.000000
-bboxCenter 0.000000 0.000000 0.000000
-}
-Inline {
-url [" WheelBase-1.wrl "]
-bboxSize -1.000000 -1.000000 -1.000000
-bboxCenter 0.000000 0.000000 0.000000
-}
-Inline {
 url [" roverTire-1.wrl "]
 bboxSize -1.000000 -1.000000 -1.000000
 bboxCenter 0.000000 0.000000 0.000000
@@ -35,7 +25,27 @@ bboxSize -1.000000 -1.000000 -1.000000
 bboxCenter 0.000000 0.000000 0.000000
 }
 Inline {
+url [" armassembly.wrl "]
+bboxSize -1.000000 -1.000000 -1.000000
+bboxCenter 0.000000 0.000000 0.000000
+}
+Inline {
 url [" roverTire-4.wrl "]
+bboxSize -1.000000 -1.000000 -1.000000
+bboxCenter 0.000000 0.000000 0.000000
+}
+Inline {
+url [" WheelBase.wrl "]
+bboxSize -1.000000 -1.000000 -1.000000
+bboxCenter 0.000000 0.000000 0.000000
+}
+Inline {
+url [" WheelBase-1.wrl "]
+bboxSize -1.000000 -1.000000 -1.000000
+bboxCenter 0.000000 0.000000 0.000000
+}
+Inline {
+url [" roverTire-5.wrl "]
 bboxSize -1.000000 -1.000000 -1.000000
 bboxCenter 0.000000 0.000000 0.000000
 }
@@ -46,11 +56,6 @@ bboxCenter 0.000000 0.000000 0.000000
 }
 Inline {
 url [" 2WheelBase-1.wrl "]
-bboxSize -1.000000 -1.000000 -1.000000
-bboxCenter 0.000000 0.000000 0.000000
-}
-Inline {
-url [" roverTire-5.wrl "]
 bboxSize -1.000000 -1.000000 -1.000000
 bboxCenter 0.000000 0.000000 0.000000
 }
