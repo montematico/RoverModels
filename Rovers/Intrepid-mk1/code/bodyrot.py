@@ -26,7 +26,7 @@ def main():
     i = 0
     armroll = toRad(90)
     while True:
-        armrot = armBase_obj.get_rot() #returns a tuple with the RPY values of the armBase
+        #armrot = armBase_obj.get_rot() #returns a tuple with the RPY values of the armBase
         armroll += toRad(10)
         armBase_obj.set_rpy(armroll, 0, 0) #should chage only the roll value of the arm
         time.sleep(0.5)
