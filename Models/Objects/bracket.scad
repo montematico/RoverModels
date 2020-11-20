@@ -13,7 +13,6 @@ bracket_length = 0;
 if(bracket_length == 0)
 {
     bracket_length = (beam_width + beam_height) * (1.6); // takes the average of X,Z and multiplies it by 3.2
-    echo(bracket_length);
 
 }
 /* [Other Parameters] */
@@ -61,11 +60,26 @@ module bracket(wall_thickness, length, angle, make_printable = false)
 
 }
 */
-
-
-beam(beam_width,beam_height,bracket_angle);
-
-rotate([0,90,0])
+module bracket_tube(beam_width = 15,beam_height = 15,wall_thickness = 3,slop = 1, length = 0)
 {
-    square([beam_width * slop + wall_thickness,beam_height*slop + wall_thickness], true);
+    if (length == 0)
+    {
+        length = bracket_length;
+        echo(length);
+        echo(bracket_length);
+    }
+    beam = [beam_width * slop:beam_height*slop];
+
+    linear_extrude(length)
+    {
+        difference()
+         {
+                square([5,5],true);
+                //square(size = [beam.x + wall_thickness , beam.y + wall_thickness], true); //Forms the outer square
+                //square(size = [beam.x,beam.y], true); //forms the inner square
+        }
+    }
 }
+
+
+beam();
