@@ -33,9 +33,9 @@ def main():
     while True:
         armBase_obj.set_joint_pos(jointnum,0)        
         #armrot = armBase_obj.get_rot() #returns a tuple with the RPY values of the armBase
-        for x in range(0,360,10):
+        for x in range(-360,360,45):
             armBase_obj.set_joint_pos(jointnum,toRad(x))
-            time.sleep(0.5)
+            time.sleep(5)
             print('Current rotation = ' + str(toRad(x)) + ' radians')
         print('loop returned to 0deg')
 
