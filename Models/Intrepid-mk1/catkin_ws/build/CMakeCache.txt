@@ -401,10 +401,28 @@ rospy_DIR:PATH=/opt/ros/melodic/share/rospy/cmake
 rostime_DIR:PATH=/opt/ros/melodic/share/rostime/cmake
 
 //Value Computed by CMake
+rover-control-bringup_BINARY_DIR:STATIC=/home/monte/Documents/GitHub/RoverModels/Models/Intrepid-mk1/catkin_ws/build/rover-control-bringup
+
+//Value Computed by CMake
+rover-control-bringup_SOURCE_DIR:STATIC=/home/monte/Documents/GitHub/RoverModels/Models/Intrepid-mk1/catkin_ws/src/rover-control-bringup
+
+//Value Computed by CMake
 rover-control_BINARY_DIR:STATIC=/home/monte/Documents/GitHub/RoverModels/Models/Intrepid-mk1/catkin_ws/build/rover-control
 
 //Value Computed by CMake
 rover-control_SOURCE_DIR:STATIC=/home/monte/Documents/GitHub/RoverModels/Models/Intrepid-mk1/catkin_ws/src/rover-control
+
+//Value Computed by CMake
+rover_control_bringup_BINARY_DIR:STATIC=/home/monte/Documents/GitHub/RoverModels/Models/Intrepid-mk1/catkin_ws/build/rover-control-pickup
+
+//Value Computed by CMake
+rover_control_bringup_SOURCE_DIR:STATIC=/home/monte/Documents/GitHub/RoverModels/Models/Intrepid-mk1/catkin_ws/src/rover-control-pickup
+
+//Value Computed by CMake
+rovor_control_bringup_BINARY_DIR:STATIC=/home/monte/Documents/GitHub/RoverModels/Models/Intrepid-mk1/catkin_ws/build/rovor_control_bringup
+
+//Value Computed by CMake
+rovor_control_bringup_SOURCE_DIR:STATIC=/home/monte/Documents/GitHub/RoverModels/Models/Intrepid-mk1/catkin_ws/src/rovor_control_bringup
 
 //The directory containing a CMake configuration file for std_messages.
 std_messages_DIR:PATH=std_messages_DIR-NOTFOUND
@@ -531,7 +549,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=5
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=6
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP

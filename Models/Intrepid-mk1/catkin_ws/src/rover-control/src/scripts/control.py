@@ -9,25 +9,23 @@ from sensor_msgs.msg import Joy
 
 
 
-
-
 ##################################################################
 ###################### JOYSTICK INPUT ############################
 ##################################################################
 input = Joy()
 def JoyInput(data):
-    input.axes() = data.axes()
-    input.buttons() = data.buttons()
+    global axes
+    global buttons
+    axes = data.axes[1]
+    buttons = data.buttons[2]
 
 #subscribes to joy topic
 sub = rospy.Subscriber("joy",Joy,JoyInput)
-rospy.spin()
 
 ##################################################################
 ####################### Rover Control ############################
 ##################################################################
 
-rate = rospy.Rate(60) #60 Hz refresh rate, similar to most common displays
 
 #creates an AMBF client and tries to connects to it
 try:
@@ -43,14 +41,14 @@ else:
 
 #Joint Class to (hopefully) make adressing several joints easier.
 class Joint:
-    obj
-    jointidx = void
-    def __init__(body,joint):
+    obj = None
+    jointidx = None
+    def __init__(self, body,joint):
         #creates an obj for ambf to work with. 
         #Also has ****very basic***** error checking since idk how to do anything more advanced
         try:
-            obj = _client.get_obj_handle(body)
-            jointidx = joint
+            self.obj = _client.get_obj_handle(body)
+            self.jointidx = joint
         except:
             rospy.logwarn("An Error Occured while creating joint!")
         else:
@@ -67,15 +65,37 @@ class Joint:
         #sets the torque acting on a joint.
         obj.set_joint_effort(jointidx, torque)
 
-def main():
-    while not rospy.is_shutdown():
-        
-        #foo bar
-        #current joint position + (joy_pos * scaler)
-        _client.clean_up()
+class Wheels(Joint):
+    pass
+    #create a wheel class to adress several wheels
 
+
+
+
+
+###MAIN###
+
+def main():
+    
+    _client = Client()
+    _client.connect()
+    wheel = Joint("/ambf/env/2WheelSpringRight",0)
+    wheel.settorque(5)
+    print "got here"
+    while not rospy.is_shutdown():
+        print "into loop"
+        rospy.loginfo(axes)
+        if abs(axes) >= 1000:
+            wheel.move(500)
+        else:
+            wheel.move(-500)
+
+        _client.clean_up()
+        rate.sleep()
 
 if __name__ == '__main__':
-	rospy.init_node('rover')
-	rospy.loginfo("Rover Node Started")
+    #rospy.init_node('rover')
+    rospy.loginfo("Rover Node Started")
+    rospy.spin()
+    rate = rospy.Rate(60) #60 Hz refresh rate, similar to most common displays
     main()

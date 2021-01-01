@@ -1,2 +1,2 @@
-rover-control
+rover-control:rover-control-bringup
 -DCATKIN_DEVEL_PREFIX=/home/monte/Documents/GitHub/RoverModels/Models/Intrepid-mk1/catkin_ws/devel -DCMAKE_INSTALL_PREFIX=/home/monte/Documents/GitHub/RoverModels/Models/Intrepid-mk1/catkin_ws/install -G Unix Makefiles

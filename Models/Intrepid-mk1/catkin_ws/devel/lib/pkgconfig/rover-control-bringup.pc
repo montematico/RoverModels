@@ -1,0 +1,8 @@
+prefix=/home/monte/Documents/GitHub/RoverModels/Models/Intrepid-mk1/catkin_ws/devel
+
+Name: rover-control-bringup
+Description: Description of rover-control-bringup
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
