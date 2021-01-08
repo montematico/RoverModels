@@ -72,9 +72,9 @@ BODY 1WheelSpringLeft:
       y: 0
   passive: false
   color: random
-  publish children names: false
-  publish joint names: false
-  publish joint positions: false
+  publish children names: true
+  publish joint names: true
+  publish joint positions: true
   friction:
     rolling: 0.1
     static: 0.5
@@ -113,9 +113,9 @@ BODY 1WheelSpringRight:
       y: 0
   passive: false
   color: random
-  publish children names: false
-  publish joint names: false
-  publish joint positions: false
+  publish children names: true
+  publish joint names: true
+  publish joint positions: true
   friction:
     rolling: 0.1
     static: 0.5
@@ -154,9 +154,9 @@ BODY 2WheelSpring Right:
       y: 0
   passive: false
   color: random
-  publish children names: false
-  publish joint names: false
-  publish joint positions: false
+  publish children names: true
+  publish joint names: true
+  publish joint positions: true
   friction:
     rolling: 0.1
     static: 0.5
@@ -195,9 +195,9 @@ BODY 2wheelSpringLeft:
       y: 0
   passive: false
   color: random
-  publish children names: false
-  publish joint names: false
-  publish joint positions: false
+  publish children names: true
+  publish joint names: true
+  publish joint positions: true
   friction:
     rolling: 0.1
     static: 0.5
@@ -236,9 +236,9 @@ BODY armBase:
       y: 0
   passive: false
   color: random
-  publish children names: false
-  publish joint names: false
-  publish joint positions: false
+  publish children names: true
+  publish joint names: true
+  publish joint positions: true
   friction:
     rolling: 0.1
     static: 0.5
@@ -277,9 +277,9 @@ BODY ArmLowerLower:
       y: 0
   passive: false
   color: random
-  publish children names: false
-  publish joint names: false
-  publish joint positions: false
+  publish children names: true
+  publish joint names: true
+  publish joint positions: true
   friction:
     rolling: 0.1
     static: 0.5
@@ -318,9 +318,9 @@ BODY ArmShoulder:
       y: 0
   passive: false
   color: random
-  publish children names: false
-  publish joint names: false
-  publish joint positions: false
+  publish children names: true
+  publish joint names: true
+  publish joint positions: true
   friction:
     rolling: 0.1
     static: 0.5
@@ -359,9 +359,9 @@ BODY ArmUpperArm:
       y: 0
   passive: false
   color: random
-  publish children names: false
-  publish joint names: false
-  publish joint positions: false
+  publish children names: true
+  publish joint names: true
+  publish joint positions: true
   friction:
     rolling: 0.1
     static: 0.5
@@ -400,9 +400,9 @@ BODY ArmUpperLower:
       y: 0
   passive: false
   color: random
-  publish children names: false
-  publish joint names: false
-  publish joint positions: false
+  publish children names: true
+  publish joint names: true
+  publish joint positions: true
   friction:
     rolling: 0.1
     static: 0.5
@@ -441,9 +441,9 @@ BODY Ltire1:
       y: 0
   passive: false
   color: random
-  publish children names: false
-  publish joint names: false
-  publish joint positions: false
+  publish children names: true
+  publish joint names: true
+  publish joint positions: true
   friction:
     rolling: 0.1
     static: 0.5
@@ -482,9 +482,9 @@ BODY Ltire2:
       y: 0
   passive: false
   color: random
-  publish children names: false
-  publish joint names: false
-  publish joint positions: false
+  publish children names: true
+  publish joint names: true
+  publish joint positions: true
   friction:
     rolling: 0.1
     static: 0.5
@@ -523,9 +523,9 @@ BODY Ltire3:
       y: 0
   passive: false
   color: random
-  publish children names: false
-  publish joint names: false
-  publish joint positions: false
+  publish children names: true
+  publish joint names: true
+  publish joint positions: true
   friction:
     rolling: 0.1
     static: 0.5
@@ -564,9 +564,9 @@ BODY RoverBody:
       y: 0
   passive: false
   color: random
-  publish children names: false
-  publish joint names: false
-  publish joint positions: false
+  publish children names: true
+  publish joint names: true
+  publish joint positions: true
   friction:
     rolling: 0.1
     static: 0.5
@@ -605,9 +605,9 @@ BODY Rtire1:
       y: 0
   passive: false
   color: random
-  publish children names: false
-  publish joint names: false
-  publish joint positions: false
+  publish children names: true
+  publish joint names: true
+  publish joint positions: true
   friction:
     rolling: 0.1
     static: 0.5
@@ -646,9 +646,9 @@ BODY Rtire2:
       y: 0
   passive: false
   color: random
-  publish children names: false
-  publish joint names: false
-  publish joint positions: false
+  publish children names: true
+  publish joint names: true
+  publish joint positions: true
   friction:
     rolling: 0.1
     static: 0.5
@@ -687,9 +687,9 @@ BODY Rtire3:
       y: 0
   passive: false
   color: random
-  publish children names: false
-  publish joint names: false
-  publish joint positions: false
+  publish children names: true
+  publish joint names: true
+  publish joint positions: true
   friction:
     rolling: 0.1
     static: 0.5

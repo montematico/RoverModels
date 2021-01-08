@@ -1,3 +1,5 @@
+#!/bin/bash
+
 #sources ROS and the rest of BASH to make sure everythings there
 #source ~/.bashrc
 
