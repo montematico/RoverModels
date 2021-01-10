@@ -7,7 +7,7 @@
 from ambf_client import Client
 import rospy
 from sensor_msgs.msg import Joy
-
+from PyKDL import Vector, Wrench, Rotation
 
 
 axes = 0.0 #sets axes to a float
@@ -37,51 +37,43 @@ class JointPos:
     def __init__(self,Topic):
         jointsub = rospy.Subscriber(str(Topic),Topic,self.jointCallback)
     def jointCallback(self,data):
+        data
         pass
 
 #creates an AMBF client and tries to connects to it
-try:
-    _client = Client()
-    _client.connect()
-except:
-    rospy.logwarn("ERROR CONNECTING TO AMBF CLIENT!")
-else:
-    rospy.loginfo("Created and Connected to AMBF client.")
-    rospy.loginfo(_client.get_obj_names())
-    RoverBody =_client.get_obj_handle('RoverBody')
 
-
-#Joint Class to (hopefully) make adressing several joints easier.
-class Joint:
+class Movement:
     obj = None
     jointidx = 0
-    def __init__(self, body,joint):
+    def __init__(self, body):
         #creates an obj for ambf to work with. 
         #Also has ****very basic***** error checking since idk how to do anything more advanced
         try:
-            Joint.obj = _client.get_obj_handle(body)
-            Joint.jointidx = joint
+            self.obj = _client.get_obj_handle(body)
         except:
             rospy.logwarn("An Error Occured while creating joint!")
         else:
-            rospy.loginfo("New Joint created \n body: " + str(body) + "\n idx: " + str(joint))
+            rospy.loginfo("Body: " + str(self) + " connected to: " + str(body))
 
-    def get_joint_pos():
-
-
-    def move(self, pos,torque = 0):
-        #sets position for joint to travel to, also optionally pass torque parameter
-        self.obj.set_joint_pos(self.jointidx, self.obj.get_joint_pos() + pos) #get_joint_pos doesn't work. Use rostopics /ambf/env/*Parentname*/state
-        if torque != 0:
-            self.obj.set_joint_effort(self.jointidx, torque)
-    
-    def setTorque(self, force):
-        #sets the torque acting on a joint.
-        self.obj.set_joint_effort(self.jointidx, force)
-
-class Wheels(Joint):
-    pass
-    #create a wheel class to adress several wheels
+    def move(self, pos):
+        if type(pos) == 'list':
+            #if a list is supplied then move uses absolute coordinates and moves the rover there.
+            if len(pos) == 2:
+                self.obj.set_position(pos[0],pos[1])
+            elif len(pos) == 3:
+                self.obj.set_position(pos[0],pos[1],pos[2])
+            else:
+                rospy.logerr(ValueError("List either has too few or too many values! Please supply either 2 or 3 cartesian coordinates."))
+                raise ValueError("List either has too few or too many values! Please supply either 2 or 3 cartesian coordinates.")
+        else:
+            pass
+            #if a single coordinate is provided then the rover simply moves forward that distance
+            #eventually I'll make this support 3d coordinates but right now it only supports 2d movement.
+            #moveVector = Vector(0,0,0)
+            #rot = self.obj.get_rpy()
+            
+            #rot.pop(0) #removes the roll component since it's unnececary
+            #pitch = y, yaw = x
 
 
 
@@ -93,7 +85,7 @@ def main():
     
     _client = Client()
     _client.connect()
-    wheel = Joint("/ambf/env/2WheelSpringRight",0)
+    wheel = Joint("/ambf/env/Body")
     #wheel.setTorque()
     print("got here")
     while not rospy.is_shutdown():
