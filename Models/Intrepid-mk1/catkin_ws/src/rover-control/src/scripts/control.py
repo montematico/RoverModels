@@ -59,7 +59,7 @@ class Movement(Client):
     def reset(self):
         #for debuggin moves model back the center of view
         self.obj.set_pos(0,0,0)
-        self.obj.set_rpy(math.pi/2,0,math.pi/2)
+        self.obj.set_rpy(math.pi/2,0,0)
         rospy.sleep(0.5) #waits for reset move to complete otherwise things get goofy
 
     def ABSmove(self, pos):
@@ -100,11 +100,23 @@ class Movement(Client):
             self.obj.set_pos(moveCoord[0],moveCoord[1],0)
         
     def move2(self,pos):
+        rot = self.obj.get_rpy()
         currentPos = self.obj.get_pos()
-        self.obj.set_pos(0,currentPos.y + pos, 0)
+        currentPos = Vector(currentPos.x,currentPos.y,currentPos.z)
+
+        DVector = Vector( #vector constructer
+        round(pos * (math.cos(rot[2])),3)
+        ,round(pos * (math.sin(rot[2])),3)
+        ,0
+        )
+        MovePos = currentPos + DVector
+        self.obj.set_pos(MovePos.x(),MovePos.y(),0) #replace 0 with MovePos.z() for z component
+        rospy.loginfo("Moving: \n dX: " + str(DVector.x()) + "\n dY: " + str(DVector.y()) + "\n RPY: " + str(rot))
+        rospy.loginfo(MovePos)
+
 
     def debugMove(self):
-        self.obj.set_rpy(math.pi/2,0,math.pi/2)
+        self.obj.set_rpy(math.pi/2,0,0)
         #self.obj.set_pos(self.obj.get_pos().x,self.obj.get_pos().y,0)
 
 
@@ -129,11 +141,13 @@ def main():
         wheel.debugMove()
         #rospy.logwarn(Xb1.axes)
         #rospy.logwarn(Xb1.buttons)
-        test = "stering"
+
         if Xb1.axes[1] != 0:
-            wheel.move(Xb1.axes[1])
+            wheel.move2(Xb1.axes[1])
+            rospy.loginfo("Trying to move")
         if Xb1.buttons[0] == 1:
             wheel.reset() #resets to (0,0,0) and RPY (0,0,0) activated with A button
+            rospy.logwarn("Resetting Position to (0,0)")
         if Xb1.buttons[1] == 1:
             wheel.ABSmove([float(input("X coord: ")),float(input("Y coord: ")),0]) #for debugging allows movement to custom coordinate activated with B button
 
@@ -146,5 +160,5 @@ if __name__ == '__main__':
     rospy.init_node('rover')
     rospy.loginfo("Rover Node Started")
     #rospy.spin()
-    rate = rospy.Rate(2) #60 Hz refresh rate, similar to most common displays
+    rate = rospy.Rate(60) #60 Hz refresh rate, similar to most common displays
     main()
