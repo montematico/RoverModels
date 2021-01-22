@@ -75,50 +75,22 @@ class Movement(Client):
         rospy.loginfo(self.obj.get_pos())
 
     def move(self,pos):
-        #if a single coordinate is provided then the rover simply moves forward that distance
-        #eventually I'll make this support 3d coordinates but right now it only supports 2d movement.
-    
-        #takes the Yaw and desired move distance then calculates the X and Y component of the move.
-        rot = self.obj.get_rpy()
-        Dxyz = [
-        round(pos * math.sin(rot[2] - (math.pi/2)),3)
-        ,round(pos * math.cos(rot[2] - (math.pi/2)),3)
-        #,pos * math.sin(rot[1]) The Z component unnececary
-        ]
-        ignoreMove = False
-        
-        #since this adds to the current position even if no change is needed it will move.
-        #this check skips the move unless there is a significant change in the move
-        for i in Dxyz:
-            if abs(i) <= 0.1:
-                ignoreMove = True
-            else:
-                ignoreMove = False
-                break
-        if not ignoreMove:
-            currentPOS = self.obj.get_pos() #not a list, geometry_msgs/Point.msg
-            moveCoord = [Dxyz[0] + currentPOS.x ,Dxyz[1] + currentPOS.y ,0]
-            rospy.loginfo(moveCoord)
-            rospy.loginfo("Moving: \n dX: " + str(Dxyz[0]) + "\n dY: " + str(Dxyz[1]) + "\n RPY: " + str(rot))
-            self.obj.set_pos(moveCoord[0],moveCoord[1],0)
-        
-    def move2(self,pos):
-
         rot = self.obj.get_rpy()
         currentPos = self.obj.get_pos()
-        currentPos = Vector(currentPos.x,currentPos.y,currentPos.z)
+        currentPos = Vector(round(currentPos.x,3),round(currentPos.y,3),round(currentPos.z,3)) #converts points msg to a vector while allows for simpler manipulation
 
-        DVector = Vector( #vector constructer
+        DVector = Vector( #Vector Constructer. Calculates X,Y components based off Yaw & Desired Move distance
         round(pos * (math.cos(rot[2])),3)
         ,round(pos * (math.sin(rot[2])),3)
         ,0
         )
-        self.obj.set_pos(DVector.x(),DVector.y(),0) #replace 0 with MovePos.z() for z component
+        #self.obj.set_pos(DVector.x(),DVector.y(),0) #replace 0 with MovePos.z() for z component
         rospy.loginfo("Moving: \n dX: " + str(DVector.x()) + "\n dY: " + str(DVector.y()) + "\n RPY: " + str(rot))
-        rospy.loginfo(self.obj.get_pos())
+        
         #error occurs when adding onto
-        #currentPos += DVector
-        #self.obj.set_pos(currentPos.x(),currentPos.y(),0)
+        currentPos += DVector
+        self.obj.set_pos(currentPos.x(),currentPos.y(),0)
+        rospy.loginfo(self.obj.get_pos())
 
     def debugMove(self):
         pass
@@ -154,7 +126,7 @@ def main():
         #rospy.logwarn(Xb1.buttons)
 
         if Xb1.axes[1] != 0:
-            wheel.move2(Xb1.axes[1])
+            wheel.move(Xb1.axes[1])
             rospy.loginfo("Trying to move")
         if Xb1.buttons[0] == 1:
             wheel.reset() #resets to (0,0,0) and RPY (0,0,0) activated with A button
@@ -173,5 +145,5 @@ if __name__ == '__main__':
     rospy.init_node('rover')
     rospy.loginfo("Rover Node Started")
     #rospy.spin()
-    rate = rospy.Rate(1) #60 Hz refresh rate, similar to most common displays
+    rate = rospy.Rate(60) #60 Hz refresh rate, similar to most common displays
     main()
