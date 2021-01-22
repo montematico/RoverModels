@@ -17,8 +17,8 @@ import time
 class Joystick:
     def __init__(self):
         print(" XB1 class init")
-    axes = [0,0] 
-    buttons =[0,0] 
+    axes = [0] * 8 #creates an empty list with all 0 since otherwise when first starting sometimes the script will fail when trying to access and out of index number
+    buttons =[0] * 11 
 
 Xb1 = Joystick()
 def JoyInput(data):
@@ -71,6 +71,9 @@ class Movement(Client):
         else:
             rospy.logerr(ValueError("List either has too few or too many values! Please supply either 2 or 3 cartesian coordinates."))
             raise ValueError("List either has too few or too many values! Please supply either 2 or 3 cartesian coordinates.")
+        rospy.sleep(0.5)
+        rospy.loginfo(self.obj.get_pos())
+
     def move(self,pos):
         #if a single coordinate is provided then the rover simply moves forward that distance
         #eventually I'll make this support 3d coordinates but right now it only supports 2d movement.
@@ -100,6 +103,7 @@ class Movement(Client):
             self.obj.set_pos(moveCoord[0],moveCoord[1],0)
         
     def move2(self,pos):
+
         rot = self.obj.get_rpy()
         currentPos = self.obj.get_pos()
         currentPos = Vector(currentPos.x,currentPos.y,currentPos.z)
@@ -109,16 +113,23 @@ class Movement(Client):
         ,round(pos * (math.sin(rot[2])),3)
         ,0
         )
-        MovePos = currentPos + DVector
-        self.obj.set_pos(MovePos.x(),MovePos.y(),0) #replace 0 with MovePos.z() for z component
+        self.obj.set_pos(DVector.x(),DVector.y(),0) #replace 0 with MovePos.z() for z component
         rospy.loginfo("Moving: \n dX: " + str(DVector.x()) + "\n dY: " + str(DVector.y()) + "\n RPY: " + str(rot))
-        rospy.loginfo(MovePos)
-
+        rospy.loginfo(self.obj.get_pos())
+        #error occurs when adding onto
+        #currentPos += DVector
+        #self.obj.set_pos(currentPos.x(),currentPos.y(),0)
 
     def debugMove(self):
-        self.obj.set_rpy(math.pi/2,0,0)
+        pass
+        #self.obj.set_rpy(math.pi/2,0,math.pi*3/4)
         #self.obj.set_pos(self.obj.get_pos().x,self.obj.get_pos().y,0)
+        #rospy.loginfo(self.obj.get_pos())
 
+    def rotate(self,rot):
+        CurRot = self.obj.get_rpy()
+        Drot = CurRot[2] + rot
+        self.obj.set_rpy(CurRot[0],CurRot[1],Drot)
 
 
 
@@ -150,6 +161,8 @@ def main():
             rospy.logwarn("Resetting Position to (0,0)")
         if Xb1.buttons[1] == 1:
             wheel.ABSmove([float(input("X coord: ")),float(input("Y coord: ")),0]) #for debugging allows movement to custom coordinate activated with B button
+        if Xb1.axes[3] != 0:
+            wheel.rotate(Xb1.axes[3]) #no need to normalize since it already is +- 1
 
         _client.clean_up()
         rate.sleep()
@@ -160,5 +173,5 @@ if __name__ == '__main__':
     rospy.init_node('rover')
     rospy.loginfo("Rover Node Started")
     #rospy.spin()
-    rate = rospy.Rate(60) #60 Hz refresh rate, similar to most common displays
+    rate = rospy.Rate(1) #60 Hz refresh rate, similar to most common displays
     main()
