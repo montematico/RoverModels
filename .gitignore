@@ -1,1 +1,4 @@
 *.flv
+*.gcode
+*.vscode
+Models/Intrepid-mk1/catkin_ws/src/rover-control/src/scripts/pyclient.py
