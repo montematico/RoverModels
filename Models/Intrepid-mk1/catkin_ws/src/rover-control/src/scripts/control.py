@@ -89,7 +89,7 @@ class Movement(Client):
         
         #error occurs when adding onto
         currentPos += DVector
-        self.obj.set_pos(currentPos.x(),currentPos.y(),0)
+        self.obj.set_pos(currentPos.x(),currentPos.y(),-1.03)
         rospy.loginfo(self.obj.get_pos())
 
     def debugMove(self):

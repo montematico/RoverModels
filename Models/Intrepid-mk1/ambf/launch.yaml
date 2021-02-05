@@ -2,8 +2,8 @@
 world config: /home/monte/Documents/GitHub/ambf/ambf_models/descriptions/world/world.yaml
 color config: /home/monte/Documents/GitHub/ambf/ambf_models/descriptions/color/colors.yaml
 input devices config: /home/monte/Documents/GitHub/ambf/ambf_models/descriptions/input_devices/input_devices.yaml
+
 multibody configs:
-  -"/home/monte/Documents/GitHub/RoverModels/Models/Intrepid-mk1/ambf/intrepid.yaml"
-  #-"./intrepid.yaml" #the rover #0
-  #-"./sensors_actuators.yaml" #the sensors and actuators, duh
-  #-"./testBOX/default.yaml"
+  - "./intrepid.yaml" #the rover
+  - "./sensors_actuators.yaml" #the sensors and actuators, duh
+  - "./testBOX/default.yaml"

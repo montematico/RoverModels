@@ -14,11 +14,11 @@ BODY Cube:
   mesh: Cube.STL
   mass: 1.0
   collision margin: 0.001
-  scale: 1.0
+  scale: 0.25
   location:
     position:
       x: 0.0
-      y: 0.0
+      y: 2.0
       z: 0.0
     orientation:
       r: 0.0
@@ -56,4 +56,4 @@ BODY Cube:
       b: 0.4
       g: 0.4
       r: 0.4
-    transparency: 1.0
+    transparency: 0.25

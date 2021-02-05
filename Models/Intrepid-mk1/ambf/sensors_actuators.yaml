@@ -2,32 +2,45 @@
 bodies: []
 joints: []
 sensors: [SENSOR Proximity0]
-actuators: [ACTUATOR Constraint0, ACTUATOR Constraint1, ACTUATOR Constraint2, ACTUATOR Constraint3]
+actuators: [ACTUATOR Constraint0]
 high resolution path: ./high_res/
 low resolution path: ./low_res/
 ignore inter-collision: true
-namespace: /ambf/intrepid/
+namespace: /ambf/env/
 
 
 #Sensor at tip of claw
 parent: &default_parent Wrist
 
+
 SENSOR Proximity0:
-  name: tip_sensor_array
+  name: tip_sensor
   type: Proximity
   location:
-  
-    orientation: {r: 0.0,p: 0.0,y: 0.0}
-    position: {x: -0.065, y: 0, z: -0.25}
-    range: 0.1
-    parent: *default_parent
-    visible: True
-    visible size: 0.01
+    orientation: {r: 1.57,p: 0,y: 0}
+    position: {x: 0.065, y: -0.03, z: 0}
+  array:
+    -
+      offset: {x: 0.0, y: 0.025, z: 0.0}
+      direction: {x: 0.0, y: 0.0, z: 1.0}
+    -
+      offset: {x: 0.0, y: -0.025, z: 0.0}
+      direction: {x: 0.0, y: 0.0, z: 1.0}
+    -
+      offset: {x: 0.025, y: 0.0, z: 0.0}
+      direction: {x: 0.0, y: 0.0, z: 1.0}
+    -
+      offset: {x: -0.025, y: 0.0, z: 0.0}
+      direction: {x: 0.0, y: 0.0, z: 1.0}
+  range: 0.1
+  parent: *default_parent
+  visible: True
+  visible size: 0.01
 
 ACTUATOR Constraint0:
   name: tip_actuator0
   type: Constraint
   location:
-    orientation: {p: 0.0, r: 0.0, y: 0.0}
-    position: {x: -0.065, y: 0.00, z: -0.25}
+    orientation: {r: 1.57,p: 0,y: 0}
+    position: {x: 0.065, y: -0.03, z: 0}
   parent: *default_parent
