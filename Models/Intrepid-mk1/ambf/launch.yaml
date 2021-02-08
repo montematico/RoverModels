@@ -1,7 +1,7 @@
-#I'm not really sure what goes here so I'm just copy pasting
-world config: /home/monte/Documents/GitHub/ambf/ambf_models/descriptions/world/world.yaml
-color config: /home/monte/Documents/GitHub/ambf/ambf_models/descriptions/color/colors.yaml
-input devices config: /home/monte/Documents/GitHub/ambf/ambf_models/descriptions/input_devices/input_devices.yaml
+#These are relative to allow them to run on other machines easier
+world config: ../../../ambf/ambf_models/descriptions/world/world.yaml
+color config: ../../../ambf/ambf_models/descriptions/color/colors.yaml
+input devices config: ../../../ambf/ambf_models/descriptions/input_devices/input_devices.yaml
 
 multibody configs:
   - "./intrepid.yaml" #the rover

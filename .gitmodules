@@ -1,0 +1,3 @@
+[submodule "ambf"]
+	path = ambf
+	url = git@github.com:WPI-AIM/ambf.git
