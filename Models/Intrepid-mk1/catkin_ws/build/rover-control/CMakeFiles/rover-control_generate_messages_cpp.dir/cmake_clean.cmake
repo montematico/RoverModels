@@ -1,0 +1,9 @@
+file(REMOVE_RECURSE
+  "/home/monte/Documents/GitHub/RoverModels/Models/Intrepid-mk1/catkin_ws/devel/include/rover-control/JointState.h"
+  "CMakeFiles/rover-control_generate_messages_cpp"
+)
+
+# Per-language clean rules from dependency scanning.
+foreach(lang )
+  include(CMakeFiles/rover-control_generate_messages_cpp.dir/cmake_clean_${lang}.cmake OPTIONAL)
+endforeach()

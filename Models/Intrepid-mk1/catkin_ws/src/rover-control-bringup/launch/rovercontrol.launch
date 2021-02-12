@@ -1,0 +1,8 @@
+<launch>
+    <param name="/rate" type="double" value="60"/>
+    <node name="RoverControl" pkg="rover-control" type="control.py" />
+    <node name="ArmControl" pkg="rover-control" type="ArmControl.py" />
+    <node name="Controller" pkg="rover-control" type="controllerLaunch.sh" />
+
+
+</launch>

@@ -1,0 +1,8 @@
+prefix=/home/monte/Documents/GitHub/RoverModels/Models/Intrepid-mk1/catkin_ws/devel
+
+Name: rover-control
+Description: Description of rover-control
+Version: 0.1.2
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

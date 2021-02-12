@@ -9,8 +9,9 @@ project(rover-control)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   roscpp
-  rospy
-  std_messages
+  rospy  #<depend>rover_msgs</depend>
+  std_msgs
+  rover_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -105,7 +106,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES rover-control
-#  CATKIN_DEPENDS roscpp rospy std_messages
+  # CATKIN_DEPENDS roscpp rospy std_message
 #  DEPENDS system_lib
 )
 

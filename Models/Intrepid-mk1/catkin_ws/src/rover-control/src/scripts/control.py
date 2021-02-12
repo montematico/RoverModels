@@ -145,5 +145,5 @@ if __name__ == '__main__':
     rospy.init_node('rover')
     rospy.loginfo("Rover Node Started")
     #rospy.spin()
-    rate = rospy.Rate(60) #60 Hz refresh rate, similar to most common displays
+    rate = rospy.Rate(rospy.get_param("/rate")) #60 Hz refresh rate, similar to most common displays
     main()

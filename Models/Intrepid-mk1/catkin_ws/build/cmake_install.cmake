@@ -131,6 +131,9 @@ endif()
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
   include("/home/monte/Documents/GitHub/RoverModels/Models/Intrepid-mk1/catkin_ws/build/gtest/cmake_install.cmake")
+  include("/home/monte/Documents/GitHub/RoverModels/Models/Intrepid-mk1/catkin_ws/build/rover-control-bringup/cmake_install.cmake")
+  include("/home/monte/Documents/GitHub/RoverModels/Models/Intrepid-mk1/catkin_ws/build/rover_msgs/cmake_install.cmake")
+  include("/home/monte/Documents/GitHub/RoverModels/Models/Intrepid-mk1/catkin_ws/build/rover-control/cmake_install.cmake")
 
 endif()
 
