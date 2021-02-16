@@ -10,6 +10,7 @@ import time
 
 
 jointEffort = 5 #joint effort for holding position in Nm
+jointArray = None
 
 #takes message from control.py
 #returns joint positions & confirmation
@@ -20,21 +21,27 @@ jointEffort = 5 #joint effort for holding position in Nm
 
 class ArmControl(Client):
     obj = None
-    jointidx = None
-    def __init__(self,body, idx):
+    constJointState = JointState()
+    def __init__(self,body, idx, name = "undef"):
         #creates object for joint position
         self.obj = _client.get_obj_handle(body)
-        jointidx = idx
+        
+        if name == "undef":
+            constJointState.name() = str(body) + "-joint::" + str(idx)
+        else:
+            constJointState.name() = name
+        constJointState.idx() = idx
+        constJointState.parentName = body
+        jointArray.append(constJointState) #adds jointstate to array to allow for mass manipulation in Unified Control
+        
     def holdPOS(self, hold):
         self.obj.set_joint_effort(jointidx, jointEffort)
     
 
 class UnifiedControl(ArmControl):
-    jointArray = None
     #[[JointName,Idx,Torque],[JointName,Idx,Torque]...]
-    def __init__(self, Array):
-        jointArray = Array
-
+    def __init__():
+        pass
     def uniHoldPOS(self, hold = True):
         #allows joints to hold position even when moving
         if not hold:
@@ -44,9 +51,10 @@ class UnifiedControl(ArmControl):
 
         for i in jointArray:
             jointArray[i].name().set_joint_effort(jointArray[i].idx(),modjointEffort)
+            jointArray.set
 
 
-
+#Create body class constructer
 
 
 def main():
