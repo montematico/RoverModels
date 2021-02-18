@@ -22,23 +22,35 @@ jointArray = None
 class ArmControl(Client):
     obj = None
     constJointState = JointState()
-    def __init__(self,body, idx, name = "undef"):
+    def __init__(self,body, idx = -1, name = "undef"):
         #creates object for joint position
-        self.obj = _client.get_obj_handle(body)
-        
-        if name == "undef":
-            constJointState.name() = str(body) + "-joint::" + str(idx)
+        if idx == -1:
+            rospy.logwarn("No IDX provided. Joint control will not be possible Body movement only!")
+        try:
+            self.obj = _client.get_obj_handle(body)
+        except:
+            raise 
+            rospy.logwarn("An Error occured while creating joint!")
         else:
-            constJointState.name() = name
-        constJointState.idx() = idx
-        constJointState.parentName = body
-        jointArray.append(constJointState) #adds jointstate to array to allow for mass manipulation in Unified Control
+            rospy.loginfo("Body: " + str(self) + " connected to: " + str(body) + "at idx =" + str(idx))
+
+            #adding joint to constJointArray list
+            if name == "undef":
+                constJointState.name() = str(body) + "-joint::" + str(idx)
+            else:
+                constJointState.name() = name
+
+            constJointState.idx() = idx
+            constJointState.parentName = body
+            jointArray.append(constJointState) #adds jointstate to array to allow for mass manipulation in Unified Control
         
+
+
     def holdPOS(self, hold):
         self.obj.set_joint_effort(jointidx, jointEffort)
     
 
-class UnifiedControl(ArmControl):
+class UnifiedControl(Client):
     #[[JointName,Idx,Torque],[JointName,Idx,Torque]...]
     def __init__():
         pass
@@ -55,6 +67,12 @@ class UnifiedControl(ArmControl):
 
 
 #Create body class constructer
+def CreateJoints():
+    Shoulder.ArmControl("RoverBody",4,"Shoulder")
+    UpperArm.ArmControl("Shoulder",0,"UpperArm")
+    ForeArm.ArmControl("UpperArm",0,"ForeArm")
+    Wrist.ArmControl("ForeArm"0,"Wrist")
+    Hand.ArmControl("Wrist",0,"Hand")
 
 
 def main():
@@ -62,8 +80,8 @@ def main():
     _client = Client()
     _client.connect()
 
-    Arm.
-
+    CreateJoints()
+    
     while not rospy.is_shutdown():
         pass
 
