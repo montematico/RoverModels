@@ -57,7 +57,7 @@ class Movement(Client):
             self.obj.set_rpy(math.pi/2,0,math.pi/2)
 
     def reset(self):
-        #for debuggin moves model back the center of view
+        #for debuggin moves model back the center of view (ctrl+r will accomplish the same thing)
         self.obj.set_pos(0,0,0)
         self.obj.set_rpy(math.pi/2,0,0)
         rospy.sleep(0.5) #waits for reset move to complete otherwise things get goofy
