@@ -43,6 +43,18 @@ class ArmControl(Client):
             constJointState.idx() = idx
             constJointState.parentName = body
             jointArray.append(constJointState) #adds jointstate to array to allow for mass manipulation in Unified Control
+    def Move(self,POS,RPY):
+        if type(POS) != 'list' or type(RPY) != 'list':
+            raise TypeError("Expected a list with 3 values, recieved: \n POS: " + str(type(POS)) + "\n RPY: " + str(type(RPY)))
+        
+        #moves relativly
+        rot = self.obj.get_rpy()
+        pos = self.obj.get_pos()
+        pos = Vector(round(pos.x,3),round(pos.y,3),round(pos.z,3))
+
+
+
+    def ABSmove(self,POS,RPY)
         
 
 
@@ -66,13 +78,23 @@ class UnifiedControl(Client):
             jointArray.set
 
 
+
 #Create body class constructer
 def CreateJoints():
-    Shoulder.ArmControl("RoverBody",4,"Shoulder")
-    UpperArm.ArmControl("Shoulder",0,"UpperArm")
-    ForeArm.ArmControl("UpperArm",0,"ForeArm")
-    Wrist.ArmControl("ForeArm"0,"Wrist")
-    Hand.ArmControl("Wrist",0,"Hand")
+    #needs to return to make sure this remains in the scope of main()
+    return [
+    Shoulder.ArmControl("RoverBody",4,"Shoulder"),
+    UpperArm.ArmControl("Shoulder",0,"UpperArm"),
+    ForeArm.ArmControl("UpperArm",0,"ForeArm"),
+    Wrist.ArmControl("ForeArm"0,"Wrist"),
+    Hand.ArmControl("Wrist",0,"Hand"),
+    sensor_array = _client.get_obj_handle(tip_sensor),
+    gripper = _client.get_obj_handle(tip_actuator0)]
+
+Controller = Joystick() #declared globally since a lot of things need access to it
+def Joystick_CB(data):
+    Controller.axes = data.axes
+    Controller.buttons = data.buttons
 
 
 def main():
@@ -80,8 +102,11 @@ def main():
     _client = Client()
     _client.connect()
 
-    CreateJoints()
+    rospy.Subscriber("joy",Joy,Joystick_CB)
+    Joints = CreateJoints()
     
+
+
     while not rospy.is_shutdown():
         pass
 

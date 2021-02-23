@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "Models/Intrepid-mk1/catkin_ws"
+		}
+	],
+	"settings": {
+		"python.autoComplete.extraPaths": [
+			"/home/monte/Documents/GitHub/RoverModels/Models/Intrepid-mk1/catkin_ws/devel/lib/python2.7/dist-packages",
+			"/home/monte/Documents/GitHub/ambf/build/devel/lib/python2.7/dist-packages",
+			"/opt/ros/melodic/lib/python2.7/dist-packages"
+		]
+	}
+}
