@@ -45,17 +45,23 @@ class ArmControl(Client):
             jointArray.append(constJointState) #adds jointstate to array to allow for mass manipulation in Unified Control
     def Move(self,POS,RPY):
         if type(POS) != 'list' or type(RPY) != 'list':
-            raise TypeError("Expected a list with 3 values, recieved: \n POS: " + str(type(POS)) + "\n RPY: " + str(type(RPY)))
-        
-        #moves relativly
-        rot = self.obj.get_rpy()
-        pos = self.obj.get_pos()
-        pos = Vector(round(pos.x,3),round(pos.y,3),round(pos.z,3))
+            #makes sure the right data-type is supplied
+            raise TypeError("Expected a list with 3 values, recieved: \n POS: " + str(type(POS)) + "\n RPY: " + str(type(RPY))
+            break
+        #Adds new pos/rpy to current versions
+        pos = self.obj.get_pos() + POS
+        rot = self.obj.get_rpy() + RPY
+        #execute
+        self.obj.set_pos(pos[0],pos[1],pos[2])
+        self.obj.set_rpy(rot[0],rot[1],rot[2])
 
-
-
-    def ABSmove(self,POS,RPY)
-        
+    def ABSmove(self,POS,RPY):
+        if type(POS) != 'list' or type(RPY) != 'list':
+            #makes sure the right data-type is supplied
+            raise TypeError("Expected a list with 3 values, recieved: \n POS: " + str(type(POS)) + "\n RPY: " + str(type(RPY))
+            break
+        self.obj.set_pos(POS[0],POS[1],POS[2])
+        self.obj.set_rpy(ROT[0],ROT[1],ROT[2])
 
 
     def holdPOS(self, hold):
@@ -75,9 +81,29 @@ class UnifiedControl(Client):
 
         for i in jointArray:
             jointArray[i].name().set_joint_effort(jointArray[i].idx(),modjointEffort)
-            jointArray.set
 
+class ControllerMove(Client):
+    Joints = None
+    def __innit__(joints):
+        #takes the joints and internalizes it
+        Joints = joints
+        UniJoint = UnifiedControl()
+    def WristMove():
+        if (Controller.Axes[6] or Controller.axes[7]) != 0 or (Controller.buttons[4] or Controller.buttons[5]) == 1:
+            Delta_Z = Controller.buttons[4] + (-1 * Controller.buttons[5]) #Creates Z change. Pressing both nulls out the value and has a net-0 change.
 
+            #2 LT, 5 RT 1    pi/36 = 10deg
+            #theres like a %20 chance this math is right.
+            Roll = (Controller.axes[2] * (math.pi /36)) - (Controller.axes[5] * (math.pi/36))
+
+            UniJoint.uniHoldPOS(False) #releases joints  
+            Joints[0].move([Controller.Axes[6],Controller.Axes[7],Delta_Z],[Roll,0,0])
+            rospy.sleep(0.1)
+            UniJoint.uniHoldPOS()
+
+        else:
+            UniJoint.uniHoldPOS()
+            #if controller buttons not held simply hold previous position
 
 #Create body class constructer
 def CreateJoints():
@@ -104,11 +130,10 @@ def main():
 
     rospy.Subscriber("joy",Joy,Joystick_CB)
     Joints = CreateJoints()
-    
-
+    Arm = ControllerMove(Joints)
 
     while not rospy.is_shutdown():
-        pass
+        Arm.WristMove()
 
 if __name__ == '__main__':
     rospy.init_node('ArmControl')
