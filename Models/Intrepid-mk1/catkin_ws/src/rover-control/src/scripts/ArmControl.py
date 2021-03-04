@@ -36,32 +36,35 @@ class ArmControl(Client):
 
             #adding joint to constJointArray list
             if name == "undef":
-                constJointState.name() = str(body) + "-joint::" + str(idx)
+                constJointState.name = str(body) + "-joint::" + str(idx)
             else:
-                constJointState.name() = name
+                constJointState.name = name
 
-            constJointState.idx() = idx
+            constJointState.idx = idx
             constJointState.parentName = body
             jointArray.append(constJointState) #adds jointstate to array to allow for mass manipulation in Unified Control
     def Move(self,POS,RPY):
         if type(POS) != 'list' or type(RPY) != 'list':
             #makes sure the right data-type is supplied
-            raise TypeError("Expected a list with 3 values, recieved: \n POS: " + str(type(POS)) + "\n RPY: " + str(type(RPY))
-            break
+            raise TypeError("Expected a list with 3 values, recieved: \n POS: " + str(type(POS)) + "\n RPY: " + str(type(RPY)))
+            return
+
         #Adds new pos/rpy to current versions
         pos = self.obj.get_pos() + POS
         rot = self.obj.get_rpy() + RPY
         #execute
         self.obj.set_pos(pos[0],pos[1],pos[2])
         self.obj.set_rpy(rot[0],rot[1],rot[2])
+        return
 
     def ABSmove(self,POS,RPY):
         if type(POS) != 'list' or type(RPY) != 'list':
             #makes sure the right data-type is supplied
-            raise TypeError("Expected a list with 3 values, recieved: \n POS: " + str(type(POS)) + "\n RPY: " + str(type(RPY))
-            break
+            raise TypeError("Expected a list with 3 values, recieved: \n POS: " + str(type(POS)) + "\n RPY: " + str(type(RPY)))
+            return
         self.obj.set_pos(POS[0],POS[1],POS[2])
         self.obj.set_rpy(ROT[0],ROT[1],ROT[2])
+        return
 
 
     def holdPOS(self, hold):
@@ -89,35 +92,43 @@ class ControllerMove(Client):
         Joints = joints
         UniJoint = UnifiedControl()
     def WristMove():
-        if (Controller.Axes[6] or Controller.axes[7]) != 0 or (Controller.buttons[4] or Controller.buttons[5]) == 1:
-            Delta_Z = Controller.buttons[4] + (-1 * Controller.buttons[5]) #Creates Z change. Pressing both nulls out the value and has a net-0 change.
+        Dpos = [0,0,0,0]#XYZ + rot
 
-            #2 LT, 5 RT 1    pi/36 = 10deg
-            #theres like a %20 chance this math is right.
-            Roll = (Controller.axes[2] * (math.pi /36)) - (Controller.axes[5] * (math.pi/36))
+        if Controller.axes[7] != 0:
+            Dpos[1] = Controller.axes[7]
+            #Y-axis
+        if Controller.axes[6] != 0:
+            Dpos[0] = Controller.axes[6]
+            #X-axis
+        if Controller.buttons[4] or Controller.buttons[5]:
+            Roll = (Controller.buttons[5] + (-1 * Controller.buttons[4]))/36
+            #shoulder buttons :: rotate wrist
+        if Controller.axes[2] or Controller.axes[5] != -1:
+            #triggers for Z
+            +1  / 2
+            Dpos[2] = ((Controller.axes[2] +1 /2) + (Controller.axes +1 / -2))
+        
+        UniJoint.uniHoldPOS(False)
+        Joints[0].move(Dpos,Roll)
+        UniJoint.uniHoldPOS()
 
-            UniJoint.uniHoldPOS(False) #releases joints  
-            Joints[0].move([Controller.Axes[6],Controller.Axes[7],Delta_Z],[Roll,0,0])
-            rospy.sleep(0.1)
-            UniJoint.uniHoldPOS()
 
-        else:
-            UniJoint.uniHoldPOS()
-            #if controller buttons not held simply hold previous position
+
 
 #Create body class constructer
 def CreateJoints():
     #needs to return to make sure this remains in the scope of main()
-    return [
-    Shoulder.ArmControl("RoverBody",4,"Shoulder"),
-    UpperArm.ArmControl("Shoulder",0,"UpperArm"),
-    ForeArm.ArmControl("UpperArm",0,"ForeArm"),
-    Wrist.ArmControl("ForeArm"0,"Wrist"),
-    Hand.ArmControl("Wrist",0,"Hand"),
-    sensor_array = _client.get_obj_handle(tip_sensor),
-    gripper = _client.get_obj_handle(tip_actuator0)]
+    jointreturn = [
+    ArmControl("RoverBody",4,"Shoulder"),
+    ArmControl("Shoulder",0,"UpperArm"),
+    ArmControl("UpperArm",0,"ForeArm"),
+    ArmControl("ForeArm",0,"Wrist"),
+    ArmControl("Wrist",0,"Hand"),
+    _client.get_obj_handle('tip_sensor'),
+    _client.get_obj_handle('tip_actuator0')]
 
-Controller = Joystick() #declared globally since a lot of things need access to it
+    return jointreturn
+#Controller = Joystick() #declared globally since a lot of things need access to it
 def Joystick_CB(data):
     Controller.axes = data.axes
     Controller.buttons = data.buttons
