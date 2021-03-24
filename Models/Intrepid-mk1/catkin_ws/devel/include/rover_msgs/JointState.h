@@ -25,12 +25,14 @@ struct JointState_
 
   JointState_()
     : name()
+    , parentName()
     , idx(0)
     , position(0.0)
     , torque(0.0)  {
     }
   JointState_(const ContainerAllocator& _alloc)
     : name(_alloc)
+    , parentName(_alloc)
     , idx(0)
     , position(0.0)
     , torque(0.0)  {
@@ -41,6 +43,9 @@ struct JointState_
 
    typedef std::basic_string<char, std::char_traits<char>, typename ContainerAllocator::template rebind<char>::other >  _name_type;
   _name_type name;
+
+   typedef std::basic_string<char, std::char_traits<char>, typename ContainerAllocator::template rebind<char>::other >  _parentName_type;
+  _parentName_type parentName;
 
    typedef int8_t _idx_type;
   _idx_type idx;
@@ -81,6 +86,7 @@ template<typename ContainerAllocator1, typename ContainerAllocator2>
 bool operator==(const ::rover_msgs::JointState_<ContainerAllocator1> & lhs, const ::rover_msgs::JointState_<ContainerAllocator2> & rhs)
 {
   return lhs.name == rhs.name &&
+    lhs.parentName == rhs.parentName &&
     lhs.idx == rhs.idx &&
     lhs.position == rhs.position &&
     lhs.torque == rhs.torque;
@@ -140,12 +146,12 @@ struct MD5Sum< ::rover_msgs::JointState_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "1a7c26045ef1a524f049f20e903f6122";
+    return "e5052bf8979554b0657f495e0fbf5ca4";
   }
 
   static const char* value(const ::rover_msgs::JointState_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0x1a7c26045ef1a524ULL;
-  static const uint64_t static_value2 = 0xf049f20e903f6122ULL;
+  static const uint64_t static_value1 = 0xe5052bf8979554b0ULL;
+  static const uint64_t static_value2 = 0x657f495e0fbf5ca4ULL;
 };
 
 template<class ContainerAllocator>
@@ -165,6 +171,7 @@ struct Definition< ::rover_msgs::JointState_<ContainerAllocator> >
   static const char* value()
   {
     return "string name\n"
+"string parentName\n"
 "int8 idx\n"
 "float32 position\n"
 "float32 torque\n"
@@ -187,6 +194,7 @@ namespace serialization
     template<typename Stream, typename T> inline static void allInOne(Stream& stream, T m)
     {
       stream.next(m.name);
+      stream.next(m.parentName);
       stream.next(m.idx);
       stream.next(m.position);
       stream.next(m.torque);
@@ -210,6 +218,8 @@ struct Printer< ::rover_msgs::JointState_<ContainerAllocator> >
   {
     s << indent << "name: ";
     Printer<std::basic_string<char, std::char_traits<char>, typename ContainerAllocator::template rebind<char>::other > >::stream(s, indent + "  ", v.name);
+    s << indent << "parentName: ";
+    Printer<std::basic_string<char, std::char_traits<char>, typename ContainerAllocator::template rebind<char>::other > >::stream(s, indent + "  ", v.parentName);
     s << indent << "idx: ";
     Printer<int8_t>::stream(s, indent + "  ", v.idx);
     s << indent << "position: ";

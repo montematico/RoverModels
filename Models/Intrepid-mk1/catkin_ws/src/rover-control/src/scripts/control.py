@@ -94,9 +94,9 @@ class Movement(Client):
 
     def debugMove(self):
         pass
-        #self.obj.set_rpy(math.pi/2,0,math.pi*3/4)
-        #self.obj.set_pos(self.obj.get_pos().x,self.obj.get_pos().y,0)
-        #rospy.loginfo(self.obj.get_pos())
+        self.obj.set_rpy(math.pi/2,0,math.pi*3/4)
+        self.obj.set_pos(self.obj.get_pos().x,self.obj.get_pos().y,0)
+        rospy.loginfo(self.obj.get_pos())
 
     def rotate(self,rot):
         CurRot = self.obj.get_rpy()
@@ -117,24 +117,21 @@ def main():
     
     rospy.Subscriber("joy",Joy,JoyInput)
 
-    wheel = Movement("RoverBody")
+    Body = Movement("RoverBody")
 
-    wheel.ABSmove([0,0,0])
+    Body.ABSmove([0,0,0])
     while not rospy.is_shutdown():
-        wheel.debugMove()
-        #rospy.logwarn(Xb1.axes)
-        #rospy.logwarn(Xb1.buttons)
 
         if Xb1.axes[1] != 0:
-            wheel.move(Xb1.axes[1])
+            Body.move(Xb1.axes[1])
             rospy.loginfo("Trying to move")
         if Xb1.buttons[0] == 1:
-            wheel.reset() #resets to (0,0,0) and RPY (0,0,0) activated with A button
+            Body.reset() #resets to (0,0,0) and RPY (0,0,0) activated with A button
             rospy.logwarn("Resetting Position to (0,0)")
         if Xb1.buttons[1] == 1:
-            wheel.ABSmove([float(input("X coord: ")),float(input("Y coord: ")),0]) #for debugging allows movement to custom coordinate activated with B button
+            Body.ABSmove([float(input("X coord: ")),float(input("Y coord: ")),0]) #for debugging allows movement to custom coordinate activated with B button
         if Xb1.axes[3] != 0:
-            wheel.rotate(Xb1.axes[3]) #no need to normalize since it already is +- 1
+            Body.rotate(Xb1.axes[3]) #no need to normalize since it already is +- 1
 
         _client.clean_up()
         rate.sleep()

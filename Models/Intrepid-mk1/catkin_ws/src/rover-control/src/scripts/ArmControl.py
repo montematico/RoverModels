@@ -10,7 +10,7 @@ import time
 
 
 jointEffort = 5 #joint effort for holding position in Nm
-jointArray = None
+jointArray = list() #a global array of joints and associatated information about them. See JointState.msg for exact data
 
 #takes message from control.py
 #returns joint positions & confirmation
@@ -18,10 +18,9 @@ jointArray = None
 
 #just drag the tip and let the rest of the model follow along.
 #add checks to make sure the tip doesnt get out of bounds.
-
+_client = Client()
 class ArmControl(Client):
-    obj = None
-    constJointState = JointState()
+    #obj = None
     def __init__(self,body, idx = -1, name = "undef"):
         #creates object for joint position
         if idx == -1:
@@ -34,15 +33,18 @@ class ArmControl(Client):
         else:
             rospy.loginfo("Body: " + str(self) + " connected to: " + str(body) + "at idx =" + str(idx))
 
-            #adding joint to constJointArray list
-            if name == "undef":
-                constJointState.name = str(body) + "-joint::" + str(idx)
-            else:
-                constJointState.name = name
+        constJointState = JointState()
+        #adding joint to constJointArray list
+        if name == "undef":
+            constJointState.name = str(body) + "-joint::" + str(idx)
+        else:
+            constJointState.name = name
 
-            constJointState.idx = idx
-            constJointState.parentName = body
-            jointArray.append(constJointState) #adds jointstate to array to allow for mass manipulation in Unified Control
+        constJointState.idx = idx
+        constJointState.parentName = body
+        jointArray.append(constJointState) #adds jointstate to array to allow for mass manipulation in Unified Control
+
+
     def Move(self,POS,RPY):
         if type(POS) != 'list' or type(RPY) != 'list':
             #makes sure the right data-type is supplied
@@ -67,8 +69,8 @@ class ArmControl(Client):
         return
 
 
-    def holdPOS(self, hold):
-        self.obj.set_joint_effort(jointidx, jointEffort)
+    def holdPOS(self, Effort):
+        self.obj.set_joint_effort(jointidx, Effort)
     
 
 class UnifiedControl(Client):
@@ -82,16 +84,17 @@ class UnifiedControl(Client):
         else:
             modjointEffort = jointEffort
 
-        for i in jointArray:
-            jointArray[i].name().set_joint_effort(jointArray[i].idx(),modjointEffort)
+        for i in range(0, len(Joints)):
+            #loops through jointArray to set the torque/effort for joints to a previosly defined number
+            Joints[i].holdPOS(jointEffort)
 
-class ControllerMove(Client):
+class ControllerMove(Client,UnifiedControl):
     Joints = None
     def __innit__(joints):
         #takes the joints and internalizes it
         Joints = joints
-        UniJoint = UnifiedControl()
-    def WristMove():
+        #self.UniJoint = UnifiedControl()
+    def WristMove(self):
         Dpos = [0,0,0,0]#XYZ + rot
 
         if Controller.axes[7] != 0:
@@ -105,10 +108,12 @@ class ControllerMove(Client):
             #shoulder buttons :: rotate wrist
         if Controller.axes[2] or Controller.axes[5] != -1:
             #triggers for Z
-            +1  / 2
-            Dpos[2] = ((Controller.axes[2] +1 /2) + (Controller.axes +1 / -2))
+            #+1  / 2 
+            
+            Dz = (((Controller.axes[2]) + 1 /2) + ((Controller.axes[5]) +1 / -2))
+            Dpos[2] = Dz
         
-        UniJoint.uniHoldPOS(False)
+        self.uniHoldPOS(False)
         Joints[0].move(Dpos,Roll)
         UniJoint.uniHoldPOS()
 
@@ -128,7 +133,17 @@ def CreateJoints():
     _client.get_obj_handle('tip_actuator0')]
 
     return jointreturn
-#Controller = Joystick() #declared globally since a lot of things need access to it
+
+Joints = CreateJoints()
+
+
+class Joystick:
+    def __init__(self):
+        print("Joystick class init")
+    axes = [0] * 8 #creates an empty list with all 0 since otherwise when first starting sometimes the script will fail when trying to access and out of index number
+    buttons =[0] * 11 
+
+Controller = Joystick()
 def Joystick_CB(data):
     Controller.axes = data.axes
     Controller.buttons = data.buttons
@@ -140,7 +155,7 @@ def main():
     _client.connect()
 
     rospy.Subscriber("joy",Joy,Joystick_CB)
-    Joints = CreateJoints()
+    #Joints = CreateJoints()
     Arm = ControllerMove(Joints)
 
     while not rospy.is_shutdown():

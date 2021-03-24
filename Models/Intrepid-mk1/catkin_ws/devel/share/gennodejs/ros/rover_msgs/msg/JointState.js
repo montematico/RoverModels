@@ -19,6 +19,7 @@ class JointState {
     if (initObj === null) {
       // initObj === null is a special case for deserialization where we don't initialize fields
       this.name = null;
+      this.parentName = null;
       this.idx = null;
       this.position = null;
       this.torque = null;
@@ -29,6 +30,12 @@ class JointState {
       }
       else {
         this.name = '';
+      }
+      if (initObj.hasOwnProperty('parentName')) {
+        this.parentName = initObj.parentName
+      }
+      else {
+        this.parentName = '';
       }
       if (initObj.hasOwnProperty('idx')) {
         this.idx = initObj.idx
@@ -55,6 +62,8 @@ class JointState {
     // Serializes a message object of type JointState
     // Serialize message field [name]
     bufferOffset = _serializer.string(obj.name, buffer, bufferOffset);
+    // Serialize message field [parentName]
+    bufferOffset = _serializer.string(obj.parentName, buffer, bufferOffset);
     // Serialize message field [idx]
     bufferOffset = _serializer.int8(obj.idx, buffer, bufferOffset);
     // Serialize message field [position]
@@ -70,6 +79,8 @@ class JointState {
     let data = new JointState(null);
     // Deserialize message field [name]
     data.name = _deserializer.string(buffer, bufferOffset);
+    // Deserialize message field [parentName]
+    data.parentName = _deserializer.string(buffer, bufferOffset);
     // Deserialize message field [idx]
     data.idx = _deserializer.int8(buffer, bufferOffset);
     // Deserialize message field [position]
@@ -82,7 +93,8 @@ class JointState {
   static getMessageSize(object) {
     let length = 0;
     length += object.name.length;
-    return length + 13;
+    length += object.parentName.length;
+    return length + 17;
   }
 
   static datatype() {
@@ -92,13 +104,14 @@ class JointState {
 
   static md5sum() {
     //Returns md5sum for a message object
-    return '1a7c26045ef1a524f049f20e903f6122';
+    return 'e5052bf8979554b0657f495e0fbf5ca4';
   }
 
   static messageDefinition() {
     // Returns full string definition for message
     return `
     string name
+    string parentName
     int8 idx
     float32 position
     float32 torque
@@ -117,6 +130,13 @@ class JointState {
     }
     else {
       resolved.name = ''
+    }
+
+    if (msg.parentName !== undefined) {
+      resolved.parentName = msg.parentName;
+    }
+    else {
+      resolved.parentName = ''
     }
 
     if (msg.idx !== undefined) {

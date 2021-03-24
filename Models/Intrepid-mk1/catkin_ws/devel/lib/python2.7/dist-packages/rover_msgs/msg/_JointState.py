@@ -8,16 +8,17 @@ import struct
 
 
 class JointState(genpy.Message):
-  _md5sum = "1a7c26045ef1a524f049f20e903f6122"
+  _md5sum = "e5052bf8979554b0657f495e0fbf5ca4"
   _type = "rover_msgs/JointState"
   _has_header = False  # flag to mark the presence of a Header object
   _full_text = """string name
+string parentName
 int8 idx
 float32 position
 float32 torque
 """
-  __slots__ = ['name','idx','position','torque']
-  _slot_types = ['string','int8','float32','float32']
+  __slots__ = ['name','parentName','idx','position','torque']
+  _slot_types = ['string','string','int8','float32','float32']
 
   def __init__(self, *args, **kwds):
     """
@@ -27,7 +28,7 @@ float32 torque
     changes.  You cannot mix in-order arguments and keyword arguments.
 
     The available fields are:
-       name,idx,position,torque
+       name,parentName,idx,position,torque
 
     :param args: complete set of field values, in .msg order
     :param kwds: use keyword arguments corresponding to message field names
@@ -38,6 +39,8 @@ float32 torque
       # message fields cannot be None, assign default values for those that are
       if self.name is None:
         self.name = ''
+      if self.parentName is None:
+        self.parentName = ''
       if self.idx is None:
         self.idx = 0
       if self.position is None:
@@ -46,6 +49,7 @@ float32 torque
         self.torque = 0.
     else:
       self.name = ''
+      self.parentName = ''
       self.idx = 0
       self.position = 0.
       self.torque = 0.
@@ -63,6 +67,12 @@ float32 torque
     """
     try:
       _x = self.name
+      length = len(_x)
+      if python3 or type(_x) == unicode:
+        _x = _x.encode('utf-8')
+        length = len(_x)
+      buff.write(struct.Struct('<I%ss'%length).pack(length, _x))
+      _x = self.parentName
       length = len(_x)
       if python3 or type(_x) == unicode:
         _x = _x.encode('utf-8')
@@ -90,6 +100,15 @@ float32 torque
         self.name = str[start:end].decode('utf-8', 'rosmsg')
       else:
         self.name = str[start:end]
+      start = end
+      end += 4
+      (length,) = _struct_I.unpack(str[start:end])
+      start = end
+      end += length
+      if python3:
+        self.parentName = str[start:end].decode('utf-8', 'rosmsg')
+      else:
+        self.parentName = str[start:end]
       _x = self
       start = end
       end += 9
@@ -107,6 +126,12 @@ float32 torque
     """
     try:
       _x = self.name
+      length = len(_x)
+      if python3 or type(_x) == unicode:
+        _x = _x.encode('utf-8')
+        length = len(_x)
+      buff.write(struct.Struct('<I%ss'%length).pack(length, _x))
+      _x = self.parentName
       length = len(_x)
       if python3 or type(_x) == unicode:
         _x = _x.encode('utf-8')
@@ -135,6 +160,15 @@ float32 torque
         self.name = str[start:end].decode('utf-8', 'rosmsg')
       else:
         self.name = str[start:end]
+      start = end
+      end += 4
+      (length,) = _struct_I.unpack(str[start:end])
+      start = end
+      end += length
+      if python3:
+        self.parentName = str[start:end].decode('utf-8', 'rosmsg')
+      else:
+        self.parentName = str[start:end]
       _x = self
       start = end
       end += 9
