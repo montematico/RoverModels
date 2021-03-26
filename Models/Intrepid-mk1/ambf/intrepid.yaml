@@ -65,8 +65,8 @@ BODY ForeArm:
       y: 0
   passive: false
   color: random
-  publish children names: false
-  publish joint names: false
+  publish children names: true
+  publish joint names: true
   publish joint positions: false
   friction:
     rolling: 0.1
@@ -102,8 +102,8 @@ BODY Left0:
       y: 0
   passive: false
   color: random
-  publish children names: false
-  publish joint names: false
+  publish children names: true
+  publish joint names: true
   publish joint positions: false
   friction:
     rolling: 0.1
@@ -139,8 +139,8 @@ BODY Left1:
       y: 0
   passive: false
   color: random
-  publish children names: false
-  publish joint names: false
+  publish children names: true
+  publish joint names: true
   publish joint positions: false
   friction:
     rolling: 0.1
@@ -176,8 +176,8 @@ BODY Left2:
       y: 0
   passive: false
   color: random
-  publish children names: false
-  publish joint names: false
+  publish children names: true
+  publish joint names: true
   publish joint positions: false
   friction:
     rolling: 0.1
@@ -213,8 +213,8 @@ BODY LeftBogie:
       y: 0
   passive: false
   color: random
-  publish children names: false
-  publish joint names: false
+  publish children names: true
+  publish joint names: true
   publish joint positions: false
   friction:
     rolling: 0.1
@@ -250,8 +250,8 @@ BODY LeftRocker:
       y: 0
   passive: false
   color: random
-  publish children names: false
-  publish joint names: false
+  publish children names: true
+  publish joint names: true
   publish joint positions: false
   friction:
     rolling: 0.1
@@ -287,8 +287,8 @@ BODY Right0:
       y: 0
   passive: false
   color: random
-  publish children names: false
-  publish joint names: false
+  publish children names: true
+  publish joint names: true
   publish joint positions: false
   friction:
     rolling: 0.1
@@ -324,8 +324,8 @@ BODY Right1:
       y: 0
   passive: false
   color: random
-  publish children names: false
-  publish joint names: false
+  publish children names: true
+  publish joint names: true
   publish joint positions: false
   friction:
     rolling: 0.1
@@ -361,8 +361,8 @@ BODY Right2:
       y: 0
   passive: false
   color: random
-  publish children names: false
-  publish joint names: false
+  publish children names: true
+  publish joint names: true
   publish joint positions: false
   friction:
     rolling: 0.1
@@ -398,8 +398,8 @@ BODY RightBogie:
       y: 0
   passive: false
   color: random
-  publish children names: false
-  publish joint names: false
+  publish children names: true
+  publish joint names: true
   publish joint positions: false
   friction:
     rolling: 0.1
@@ -435,8 +435,8 @@ BODY RightRocker:
       y: 0
   passive: false
   color: random
-  publish children names: false
-  publish joint names: false
+  publish children names: true
+  publish joint names: true
   publish joint positions: false
   friction:
     rolling: 0.1
@@ -472,8 +472,8 @@ BODY RoverBody:
       y: 0
   passive: false
   color: random
-  publish children names: false
-  publish joint names: false
+  publish children names: true
+  publish joint names: true
   publish joint positions: false
   friction:
     rolling: 0.1
@@ -509,8 +509,8 @@ BODY Shoulder:
       y: 0
   passive: false
   color: random
-  publish children names: false
-  publish joint names: false
+  publish children names: true
+  publish joint names: true
   publish joint positions: false
   friction:
     rolling: 0.1
@@ -546,8 +546,8 @@ BODY UpperArm:
       y: 0
   passive: false
   color: random
-  publish children names: false
-  publish joint names: false
+  publish children names: true
+  publish joint names: true
   publish joint positions: false
   friction:
     rolling: 0.1
@@ -583,8 +583,8 @@ BODY Wrist:
       y: 0
   passive: false
   color: random
-  publish children names: false
-  publish joint names: false
+  publish children names: true
+  publish joint names: true
   publish joint positions: false
   friction:
     rolling: 0.1
